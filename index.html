@@ -3,125 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pregnancy Journey | ענבר ומשה</title>
+    <title>Our Journey | הליווי האישי שלנו</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#FDFCFB] text-slate-800 font-['Assistant'] pb-10">
+<body class="bg-[#FDFCFB] text-slate-800 font-['Assistant'] pb-20">
 
     <div class="max-w-5xl mx-auto p-4 md:p-8 space-y-6">
-        <header class="card-gradient p-8 rounded-[40px] text-white shadow-xl relative">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <header class="card-gradient p-8 rounded-[40px] text-white shadow-xl relative overflow-hidden">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 relative z-10">
                 <div class="text-center md:text-right">
-                    <h1 class="text-4xl font-black mb-2">המסע של ענבר ומשה</h1>
+                    <h1 class="text-4xl font-black mb-2 tracking-tight">המסע שלנו</h1>
                     <div id="display-weeks" class="text-2xl font-bold bg-white/20 inline-block px-4 py-1 rounded-full backdrop-blur-md">שבוע --</div>
+                    <div class="mt-4 text-sm opacity-90 space-y-1">
+                        <p>תאריך לידה משוער: <span id="due-date" class="font-bold text-white">--</span></p>
+                        <p>מזל הבייבי: <span id="zodiac-sign" class="font-bold text-white">--</span></p>
+                    </div>
                 </div>
-                <div class="flex flex-col items-center bg-white/10 p-4 rounded-3xl backdrop-blur-md border border-white/20 min-w-[150px]">
-                    <div id="fruit-emoji" class="text-5xl mb-1 animate-bounce">🌱</div>
-                    <div id="fruit-name" class="text-xs font-bold uppercase tracking-widest">טוען...</div>
-                    <div class="mt-2 text-center">
-                        <span id="days-left" class="text-2xl font-black italic">--</span>
-                        <p class="text-[10px] uppercase">ימים ללידה</p>
+                <div class="flex flex-col items-center bg-white/10 p-5 rounded-3xl backdrop-blur-md border border-white/20 min-w-[160px]">
+                    <div id="fruit-emoji" class="text-6xl mb-1 animate-bounce">🌱</div>
+                    <div id="fruit-name" class="text-xs font-bold uppercase tracking-widest text-pink-100">טוען...</div>
+                    <div class="mt-3 text-center border-t border-white/20 pt-2 w-full">
+                        <span id="days-left" class="text-3xl font-black italic">--</span>
+                        <p class="text-[10px] uppercase opacity-80">ימים ללידה</p>
                     </div>
                 </div>
             </div>
         </header>
 
-        <section class="card p-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-            <div>
-                <label class="label-sm text-slate-500">תאריך וסת אחרון</label>
-                <input type="date" id="lmp-date" class="input-field w-full" onchange="updateAll()">
+        <section class="card p-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+            <div class="space-y-2">
+                <label class="label-sm text-slate-500 flex items-center gap-2"><i data-lucide="calendar" class="w-3 h-3 text-pink-500"></i> תאריך וסת אחרון (LMP)</label>
+                <input type="date" id="lmp-date" class="input-field w-full" onchange="handleLMPChange()">
             </div>
-            <div class="grid grid-cols-2 gap-2">
-                <div>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="space-y-2">
                     <label class="label-sm text-slate-500">תיקון שבוע</label>
-                    <input type="number" id="manual-w" class="input-field w-full" placeholder="שבוע" oninput="updateAll()">
+                    <input type="number" id="manual-w" class="input-field w-full" oninput="handleManualChange()">
                 </div>
-                <div>
+                <div class="space-y-2">
                     <label class="label-sm text-slate-500">תיקון ימים</label>
-                    <input type="number" id="manual-d" class="input-field w-full" placeholder="ימים" oninput="updateAll()">
+                    <input type="number" id="manual-d" class="input-field w-full" oninput="handleManualChange()">
                 </div>
             </div>
-            <button onclick="resetToLMP()" class="btn-secondary text-xs">איפוס לפי תאריך</button>
+            <div class="flex flex-col gap-2">
+                <button onclick="resetDates()" class="btn-secondary text-xs w-full py-3">סנכרון מחדש</button>
+            </div>
         </section>
 
-        <nav class="flex overflow-x-auto gap-2 border-b border-slate-200 no-scrollbar">
-            <button onclick="showTab('tasks')" class="tab-btn active" id="btn-tasks">בדיקות ומשימות</button>
+        <nav class="flex overflow-x-auto gap-2 border-b border-slate-200 no-scrollbar sticky top-0 bg-[#FDFCFB]/80 backdrop-blur-md z-40 py-2">
+            <button onclick="showTab('tasks')" class="tab-btn active" id="btn-tasks">בדיקות ולו"ז</button>
             <button onclick="showTab('procurement')" class="tab-btn" id="btn-proc">רכש ותקציב</button>
             <button onclick="showTab('hospital')" class="tab-btn" id="btn-hosp">תיק לידה</button>
-            <button onclick="showTab('emergency')" class="tab-btn" id="btn-emer">חירום</button>
+            <button onclick="showTab('emergency')" class="tab-btn" id="btn-emer">אנשי קשר</button>
+            <button onclick="showTab('kicks')" class="tab-btn" id="btn-kicks">מונה בעיטות</button>
         </nav>
 
         <div id="tab-tasks" class="tab-content space-y-6">
             <div class="grid md:grid-cols-3 gap-6">
                 <div class="space-y-4">
-                    <h3 class="trim-title bg-emerald-100 text-emerald-700">טרימסטר 1 (1-13)</h3>
+                    <h3 class="trim-title bg-emerald-100 text-emerald-700 border border-emerald-200">שליש 1</h3>
                     <div id="list-1" class="space-y-2"></div>
                 </div>
                 <div class="space-y-4">
-                    <h3 class="trim-title bg-blue-100 text-blue-700">טרימסטר 2 (14-26)</h3>
+                    <h3 class="trim-title bg-blue-100 text-blue-700 border border-blue-200">שליש 2</h3>
                     <div id="list-2" class="space-y-2"></div>
                 </div>
                 <div class="space-y-4">
-                    <h3 class="trim-title bg-purple-100 text-purple-700">טרימסטר 3 (27-40)</h3>
+                    <h3 class="trim-title bg-purple-100 text-purple-700 border border-purple-200">שליש 3</h3>
                     <div id="list-3" class="space-y-2"></div>
                 </div>
             </div>
         </div>
 
-        <div id="tab-procurement" class="tab-content hidden space-y-6">
-            <div class="card p-6">
+        <div id="tab-procurement" class="tab-content hidden space-y-4">
+            <div class="card p-6 overflow-x-auto">
                 <div class="flex justify-between items-center mb-6">
-                    <h3 class="font-bold text-lg">רשימת ציוד ותקציב</h3>
-                    <div class="text-left">
-                        <p class="text-[10px] text-slate-400 uppercase">הוצאה בפועל</p>
-                        <p id="total-spent" class="text-xl font-black text-pink-500">₪0</p>
-                    </div>
+                    <h3 class="font-bold text-lg">רשימת ציוד</h3>
+                    <p id="total-spent" class="text-xl font-black text-pink-500">₪0</p>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-right text-sm">
-                        <thead class="bg-slate-50">
-                            <tr>
-                                <th class="p-3 rounded-r-xl">מוצר</th>
-                                <th class="p-3">מחיר משוער</th>
-                                <th class="p-3">שילמנו בפועל</th>
-                                <th class="p-3 text-center">סטטוס</th>
-                                <th class="p-3 rounded-l-xl"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="proc-body"></tbody>
-                    </table>
-                </div>
-                <button onclick="addProcItem()" class="btn-add-mini mt-4">+ הוסף מוצר בהתאמה אישית</button>
+                <table class="w-full text-right text-sm">
+                    <thead class="bg-slate-50 text-slate-500 font-bold uppercase text-[10px]">
+                        <tr><th class="p-3">מוצר</th><th class="p-3">מחיר</th><th class="p-3 text-center">בוצע</th><th class="p-3"></th></tr>
+                    </thead>
+                    <tbody id="proc-body"></tbody>
+                </table>
+                <button onclick="openSuggestionMenu('proc')" class="btn-add-mini mt-4">+ הוסף פריט מרשימת רעיונות</button>
             </div>
         </div>
 
         <div id="tab-hospital" class="tab-content hidden grid md:grid-cols-2 gap-6">
             <div class="card p-6">
-                <h3 class="font-bold mb-4 flex items-center gap-2 text-pink-600"><i data-lucide="package"></i> לענבר (חדר לידה)</h3>
+                <h3 class="font-bold mb-4 text-pink-600 border-b pb-2">בתיק של ענבר</h3>
                 <div id="bag-inbar" class="space-y-2"></div>
+                <button onclick="openSuggestionMenu('bag-inbar')" class="btn-add-mini mt-3">+ רעיונות לתיק</button>
             </div>
             <div class="card p-6">
-                <h3 class="font-bold mb-4 flex items-center gap-2 text-blue-600"><i data-lucide="baby"></i> לרך הנולד</h3>
+                <h3 class="font-bold mb-4 text-blue-600 border-b pb-2">בתיק של הבייבי</h3>
                 <div id="bag-baby" class="space-y-2"></div>
+                <button onclick="openSuggestionMenu('bag-baby')" class="btn-add-mini mt-3">+ רעיונות לתיק</button>
             </div>
         </div>
 
-        <div id="tab-emergency" class="tab-content hidden space-y-6">
-            <div class="card p-6 border-red-200 bg-red-50/50">
-                <h3 class="text-red-700 font-bold mb-4">קשר מהיר וחירום</h3>
-                <div id="emergency-list" class="grid md:grid-cols-2 gap-4"></div>
-                <button onclick="addEmergency()" class="btn-add-mini mt-4 text-red-600">+ הוסף איש קשר/מספר</button>
+        <div id="tab-kicks" class="tab-content hidden flex flex-col items-center py-10">
+            <div class="card p-8 text-center max-w-sm w-full">
+                <h3 class="font-bold text-xl mb-4">מונה בעיטות</h3>
+                <p class="text-xs text-slate-400 mb-6 uppercase tracking-widest">לחצו על הלב בכל פעם שמרגישים תנועה</p>
+                <button onclick="addKick()" class="w-32 h-32 bg-pink-100 rounded-full flex items-center justify-center text-4xl shadow-inner active:scale-95 transition mx-auto mb-4">💗</button>
+                <div id="kick-count" class="text-4xl font-black text-slate-800">0</div>
+                <button onclick="resetKicks()" class="mt-4 text-xs text-slate-300">איפוס מונה</button>
             </div>
         </div>
 
-        <div id="weekly-tip-box" class="bg-amber-50 border border-amber-100 p-6 rounded-[32px] flex gap-4 items-start shadow-sm">
-            <div class="bg-white p-3 rounded-2xl shadow-sm text-2xl">💡</div>
-            <div>
-                <h4 class="font-bold text-amber-900 mb-1">טיפ לשבוע <span id="tip-week-num">--</span>:</h4>
-                <p id="tip-text" class="text-amber-800 text-sm leading-relaxed italic"></p>
+        <div id="tab-emergency" class="tab-content hidden space-y-4">
+            <div id="emergency-list" class="grid md:grid-cols-2 gap-4"></div>
+            <button onclick="addEmergency()" class="btn-save w-full">+ הוסף איש קשר חדש</button>
+        </div>
+
+        <div id="help-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-[32px] p-8 max-w-lg w-full shadow-2xl relative">
+                <button onclick="closeHelp()" class="absolute top-6 left-6 text-slate-400 hover:text-slate-800 font-bold">✕</button>
+                <h3 id="help-title" class="text-xl font-black mb-4 text-pink-600">שם הבדיקה</h3>
+                <p id="help-desc" class="text-slate-600 leading-relaxed text-sm"></p>
             </div>
         </div>
     </div>
