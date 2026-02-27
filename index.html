@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Journey | הליווי האישי שלנו</title>
+    <title>Pregnancy Control Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -17,117 +17,138 @@
                 <div class="text-center md:text-right">
                     <h1 class="text-4xl font-black mb-2 tracking-tight">המסע שלנו</h1>
                     <div id="display-weeks" class="text-2xl font-bold bg-white/20 inline-block px-4 py-1 rounded-full backdrop-blur-md">שבוע --</div>
-                    <div class="mt-4 text-sm opacity-90 space-y-1">
-                        <p>תאריך לידה משוער: <span id="due-date" class="font-bold text-white">--</span></p>
-                        <p>מזל הבייבי: <span id="zodiac-sign" class="font-bold text-white">--</span></p>
+                    <div class="mt-4 text-sm opacity-90 leading-relaxed">
+                        <p>תאריך לידה משוער: <span id="due-date" class="font-bold underline">--</span></p>
+                        <p>מזל צפוי: <span id="zodiac-sign" class="font-bold">--</span></p>
                     </div>
                 </div>
                 <div class="flex flex-col items-center bg-white/10 p-5 rounded-3xl backdrop-blur-md border border-white/20 min-w-[160px]">
                     <div id="fruit-emoji" class="text-6xl mb-1 animate-bounce">🌱</div>
-                    <div id="fruit-name" class="text-xs font-bold uppercase tracking-widest text-pink-100">טוען...</div>
-                    <div class="mt-3 text-center border-t border-white/20 pt-2 w-full">
-                        <span id="days-left" class="text-3xl font-black italic">--</span>
-                        <p class="text-[10px] uppercase opacity-80">ימים ללידה</p>
-                    </div>
+                    <div id="fruit-name" class="text-xs font-bold uppercase tracking-widest">טוען...</div>
                 </div>
             </div>
         </header>
 
-        <section class="card p-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+        <section class="card p-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-end shadow-sm">
             <div class="space-y-2">
-                <label class="label-sm text-slate-500 flex items-center gap-2"><i data-lucide="calendar" class="w-3 h-3 text-pink-500"></i> תאריך וסת אחרון (LMP)</label>
+                <label class="label-sm text-slate-500">תאריך וסת אחרון</label>
                 <input type="date" id="lmp-date" class="input-field w-full" onchange="handleLMPChange()">
             </div>
             <div class="grid grid-cols-2 gap-3">
-                <div class="space-y-2">
-                    <label class="label-sm text-slate-500">תיקון שבוע</label>
+                <div>
+                    <label class="label-sm text-slate-500">שבוע</label>
                     <input type="number" id="manual-w" class="input-field w-full" oninput="handleManualChange()">
                 </div>
-                <div class="space-y-2">
-                    <label class="label-sm text-slate-500">תיקון ימים</label>
+                <div>
+                    <label class="label-sm text-slate-500">ימים</label>
                     <input type="number" id="manual-d" class="input-field w-full" oninput="handleManualChange()">
                 </div>
             </div>
-            <div class="flex flex-col gap-2">
-                <button onclick="resetDates()" class="btn-secondary text-xs w-full py-3">סנכרון מחדש</button>
-            </div>
+            <button onclick="resetDates()" class="btn-secondary py-3 text-xs uppercase font-bold">סנכרון אוטומטי</button>
         </section>
 
-        <nav class="flex overflow-x-auto gap-2 border-b border-slate-200 no-scrollbar sticky top-0 bg-[#FDFCFB]/80 backdrop-blur-md z-40 py-2">
+        <nav class="flex overflow-x-auto gap-2 border-b border-slate-200 no-scrollbar py-2 sticky top-0 bg-[#FDFCFB]/90 backdrop-blur-md z-30">
             <button onclick="showTab('tasks')" class="tab-btn active" id="btn-tasks">בדיקות ולו"ז</button>
             <button onclick="showTab('procurement')" class="tab-btn" id="btn-proc">רכש ותקציב</button>
             <button onclick="showTab('hospital')" class="tab-btn" id="btn-hosp">תיק לידה</button>
             <button onclick="showTab('emergency')" class="tab-btn" id="btn-emer">אנשי קשר</button>
-            <button onclick="showTab('kicks')" class="tab-btn" id="btn-kicks">מונה בעיטות</button>
+            <button onclick="showTab('learning')" class="tab-btn" id="btn-learn">הכנה להורות</button>
         </nav>
 
         <div id="tab-tasks" class="tab-content space-y-6">
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="space-y-4">
-                    <h3 class="trim-title bg-emerald-100 text-emerald-700 border border-emerald-200">שליש 1</h3>
-                    <div id="list-1" class="space-y-2"></div>
-                </div>
-                <div class="space-y-4">
-                    <h3 class="trim-title bg-blue-100 text-blue-700 border border-blue-200">שליש 2</h3>
-                    <div id="list-2" class="space-y-2"></div>
-                </div>
-                <div class="space-y-4">
-                    <h3 class="trim-title bg-purple-100 text-purple-700 border border-purple-200">שליש 3</h3>
-                    <div id="list-3" class="space-y-2"></div>
-                </div>
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-bold">מעקב בדיקות רפואיות</h3>
+                <button onclick="openSelector('task')" class="text-pink-600 font-bold text-sm">+ הוסף בדיקה</button>
             </div>
+            <div id="tasks-container" class="grid md:grid-cols-1 gap-3"></div>
         </div>
 
         <div id="tab-procurement" class="tab-content hidden space-y-4">
             <div class="card p-6 overflow-x-auto">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="font-bold text-lg">רשימת ציוד</h3>
-                    <p id="total-spent" class="text-xl font-black text-pink-500">₪0</p>
+                <div class="flex justify-between items-center mb-6 border-b pb-4">
+                    <h3 class="font-bold text-lg">ניהול רכש</h3>
+                    <div class="text-left">
+                        <p class="text-[10px] text-slate-400 uppercase">תקציב שנוצל</p>
+                        <p id="total-spent" class="text-2xl font-black text-emerald-600">₪0</p>
+                    </div>
                 </div>
                 <table class="w-full text-right text-sm">
-                    <thead class="bg-slate-50 text-slate-500 font-bold uppercase text-[10px]">
-                        <tr><th class="p-3">מוצר</th><th class="p-3">מחיר</th><th class="p-3 text-center">בוצע</th><th class="p-3"></th></tr>
+                    <thead>
+                        <tr class="text-slate-400 text-[10px] uppercase">
+                            <th class="pb-3 px-2">פריט</th>
+                            <th class="pb-3">סדר גודל מחיר</th>
+                            <th class="pb-3">כמה עלה לנו</th>
+                            <th class="pb-3 text-center">בוצע</th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody id="proc-body"></tbody>
                 </table>
-                <button onclick="openSuggestionMenu('proc')" class="btn-add-mini mt-4">+ הוסף פריט מרשימת רעיונות</button>
+                <button onclick="openSelector('proc')" class="btn-save w-full mt-6 bg-pink-500 hover:bg-pink-600 text-white shadow-lg">+ הוסף מוצר (מרשימה או ידני)</button>
             </div>
         </div>
 
         <div id="tab-hospital" class="tab-content hidden grid md:grid-cols-2 gap-6">
             <div class="card p-6">
-                <h3 class="font-bold mb-4 text-pink-600 border-b pb-2">בתיק של ענבר</h3>
+                <h3 class="font-bold mb-4 text-pink-600 flex justify-between">תיק לענבר <button onclick="openSelector('bag-inbar')" class="text-xs font-normal text-slate-400">+ הוסף</button></h3>
                 <div id="bag-inbar" class="space-y-2"></div>
-                <button onclick="openSuggestionMenu('bag-inbar')" class="btn-add-mini mt-3">+ רעיונות לתיק</button>
             </div>
             <div class="card p-6">
-                <h3 class="font-bold mb-4 text-blue-600 border-b pb-2">בתיק של הבייבי</h3>
+                <h3 class="font-bold mb-4 text-blue-600 flex justify-between">תיק לבייבי <button onclick="openSelector('bag-baby')" class="text-xs font-normal text-slate-400">+ הוסף</button></h3>
                 <div id="bag-baby" class="space-y-2"></div>
-                <button onclick="openSuggestionMenu('bag-baby')" class="btn-add-mini mt-3">+ רעיונות לתיק</button>
-            </div>
-        </div>
-
-        <div id="tab-kicks" class="tab-content hidden flex flex-col items-center py-10">
-            <div class="card p-8 text-center max-w-sm w-full">
-                <h3 class="font-bold text-xl mb-4">מונה בעיטות</h3>
-                <p class="text-xs text-slate-400 mb-6 uppercase tracking-widest">לחצו על הלב בכל פעם שמרגישים תנועה</p>
-                <button onclick="addKick()" class="w-32 h-32 bg-pink-100 rounded-full flex items-center justify-center text-4xl shadow-inner active:scale-95 transition mx-auto mb-4">💗</button>
-                <div id="kick-count" class="text-4xl font-black text-slate-800">0</div>
-                <button onclick="resetKicks()" class="mt-4 text-xs text-slate-300">איפוס מונה</button>
             </div>
         </div>
 
         <div id="tab-emergency" class="tab-content hidden space-y-4">
             <div id="emergency-list" class="grid md:grid-cols-2 gap-4"></div>
-            <button onclick="addEmergency()" class="btn-save w-full">+ הוסף איש קשר חדש</button>
+            <button onclick="addEmergencyItem()" class="btn-save w-full">+ הוסף איש קשר חדש</button>
         </div>
 
-        <div id="help-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-            <div class="bg-white rounded-[32px] p-8 max-w-lg w-full shadow-2xl relative">
-                <button onclick="closeHelp()" class="absolute top-6 left-6 text-slate-400 hover:text-slate-800 font-bold">✕</button>
-                <h3 id="help-title" class="text-xl font-black mb-4 text-pink-600">שם הבדיקה</h3>
-                <p id="help-desc" class="text-slate-600 leading-relaxed text-sm"></p>
+        <div id="tab-learning" class="tab-content hidden grid md:grid-cols-1 gap-6">
+            <div class="card p-6">
+                <h3 class="font-bold mb-4">ספרים וכלים מומלצים להורים</h3>
+                <div id="learning-list" class="grid md:grid-cols-1 lg:grid-cols-2 gap-4"></div>
             </div>
+        </div>
+
+    </div>
+
+    <div id="selector-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-[32px] p-8 max-w-lg w-full shadow-2xl relative">
+            <button onclick="closeSelector()" class="absolute top-6 left-6 text-slate-400 font-bold">✕</button>
+            <h3 id="modal-title" class="text-xl font-black mb-6">מה תרצו להוסיף?</h3>
+            
+            <div class="space-y-4">
+                <div class="flex flex-col">
+                    <label class="label-sm text-slate-400 mb-2">בחירה מרעיונות קיימים:</label>
+                    <select id="suggestion-select" class="input-field w-full mb-4">
+                        <option value="">-- בחר מרשימה --</option>
+                    </select>
+                </div>
+                <div class="flex flex-col border-t pt-4">
+                    <label class="label-sm text-slate-400 mb-2">או הקלדה ידנית:</label>
+                    <input type="text" id="manual-entry" class="input-field w-full" placeholder="כתוב כאן...">
+                </div>
+                <div id="modal-extra-fields" class="grid grid-cols-2 gap-4 hidden">
+                    <div>
+                        <label class="label-sm text-slate-400">מחיר שוק (₪)</label>
+                        <input type="number" id="extra-price" class="input-field w-full">
+                    </div>
+                    <div>
+                        <label class="label-sm text-slate-400">שבוע (למשימות)</label>
+                        <input type="number" id="extra-week" class="input-field w-full">
+                    </div>
+                </div>
+                <button onclick="submitSelection()" class="btn-save w-full bg-pink-500">הוסף לרשימה</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="help-modal" class="fixed inset-0 bg-slate-900/60 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-[24px] p-6 max-w-md w-full shadow-2xl">
+            <h3 id="help-title" class="text-lg font-bold mb-2">הסבר בדיקה</h3>
+            <p id="help-desc" class="text-sm text-slate-600 leading-relaxed"></p>
+            <button onclick="document.getElementById('help-modal').classList.add('hidden')" class="btn-secondary w-full mt-6">סגור</button>
         </div>
     </div>
 
