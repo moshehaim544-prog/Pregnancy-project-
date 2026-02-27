@@ -3,117 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Journey | Pregnancy Manager</title>
+    <title>Pregnancy Journey | ענבר ומשה</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#FDFCFB] text-slate-800 font-['Assistant']">
+<body class="bg-[#FDFCFB] text-slate-800 font-['Assistant'] pb-10">
 
-    <div class="max-w-5xl mx-auto p-4 md:p-8 space-y-8">
-        <header class="card-gradient p-8 rounded-[40px] text-white shadow-2xl relative overflow-hidden">
-            <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="space-y-2 text-center md:text-right">
-                    <h1 class="text-4xl font-black">המסע שלנו <span class="text-pink-200">❤</span></h1>
-                    <div class="flex items-center gap-2 bg-white/20 p-2 rounded-xl backdrop-blur-md">
-                        <i data-lucide="calendar"></i>
-                        <span id="display-weeks" class="font-bold text-xl">טוען נתונים...</span>
-                    </div>
+    <div class="max-w-5xl mx-auto p-4 md:p-8 space-y-6">
+        <header class="card-gradient p-8 rounded-[40px] text-white shadow-xl relative">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-center md:text-right">
+                    <h1 class="text-4xl font-black mb-2">המסע של ענבר ומשה</h1>
+                    <div id="display-weeks" class="text-2xl font-bold bg-white/20 inline-block px-4 py-1 rounded-full backdrop-blur-md">שבוע --</div>
                 </div>
-                
-                <div class="flex flex-col items-center bg-white/10 p-6 rounded-3xl backdrop-blur-xl border border-white/20">
-                    <div id="fruit-emoji" class="text-6xl mb-2 animate-bounce">🍒</div>
-                    <div id="fruit-name" class="text-sm font-bold uppercase tracking-widest">בגודל דובדבן</div>
-                    <div class="mt-4 text-center">
-                        <span id="days-left" class="text-3xl font-black italic">0</span>
+                <div class="flex flex-col items-center bg-white/10 p-4 rounded-3xl backdrop-blur-md border border-white/20 min-w-[150px]">
+                    <div id="fruit-emoji" class="text-5xl mb-1 animate-bounce">🌱</div>
+                    <div id="fruit-name" class="text-xs font-bold uppercase tracking-widest">טוען...</div>
+                    <div class="mt-2 text-center">
+                        <span id="days-left" class="text-2xl font-black italic">--</span>
                         <p class="text-[10px] uppercase">ימים ללידה</p>
                     </div>
                 </div>
             </div>
         </header>
 
-        <section class="card p-6 flex flex-wrap gap-4 items-end justify-center">
+        <section class="card p-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
             <div>
-                <label class="block text-xs font-bold text-slate-500 mb-1">תאריך וסת אחרון (LMP)</label>
-                <input type="date" id="lmp-date" class="input-field" onchange="calculatePulse()">
+                <label class="label-sm text-slate-500">תאריך וסת אחרון</label>
+                <input type="date" id="lmp-date" class="input-field w-full" onchange="updateAll()">
             </div>
-            <div class="text-slate-300">או</div>
-            <div>
-                <label class="block text-xs font-bold text-slate-500 mb-1">תיקון גיל (שבועות)</label>
-                <input type="number" id="override-weeks" class="input-field w-20" placeholder="שבוע" oninput="calculatePulse()">
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="label-sm text-slate-500">תיקון שבוע</label>
+                    <input type="number" id="manual-w" class="input-field w-full" placeholder="שבוע" oninput="updateAll()">
+                </div>
+                <div>
+                    <label class="label-sm text-slate-500">תיקון ימים</label>
+                    <input type="number" id="manual-d" class="input-field w-full" placeholder="ימים" oninput="updateAll()">
+                </div>
             </div>
-            <button onclick="saveData()" class="btn-save">שמור הגדרות</button>
+            <button onclick="resetToLMP()" class="btn-secondary text-xs">איפוס לפי תאריך</button>
         </section>
 
-        <nav class="flex justify-center gap-2 border-b border-slate-200">
-            <button onclick="showTab('tasks')" class="tab-btn active" id="tab-tasks">משימות ובדיקות</button>
-            <button onclick="showTab('procurement')" class="tab-btn" id="tab-proc">רכש ותקציב</button>
-            <button onclick="showTab('emergency')" class="tab-btn" id="tab-emer">חירום ולידה</button>
+        <nav class="flex overflow-x-auto gap-2 border-b border-slate-200 no-scrollbar">
+            <button onclick="showTab('tasks')" class="tab-btn active" id="btn-tasks">בדיקות ומשימות</button>
+            <button onclick="showTab('procurement')" class="tab-btn" id="btn-proc">רכש ותקציב</button>
+            <button onclick="showTab('hospital')" class="tab-btn" id="btn-hosp">תיק לידה</button>
+            <button onclick="showTab('emergency')" class="tab-btn" id="btn-emer">חירום</button>
         </nav>
 
-        <main id="content-tasks" class="tab-content">
+        <div id="tab-tasks" class="tab-content space-y-6">
             <div class="grid md:grid-cols-3 gap-6">
-                <div id="trim-1" class="space-y-4">
-                    <h3 class="trim-title bg-emerald-100 text-emerald-700">טרימסטר 1</h3>
-                    <div class="task-list" id="list-1"></div>
+                <div class="space-y-4">
+                    <h3 class="trim-title bg-emerald-100 text-emerald-700">טרימסטר 1 (1-13)</h3>
+                    <div id="list-1" class="space-y-2"></div>
                 </div>
-                <div id="trim-2" class="space-y-4">
-                    <h3 class="trim-title bg-blue-100 text-blue-700">טרימסטר 2</h3>
-                    <div class="task-list" id="list-2"></div>
+                <div class="space-y-4">
+                    <h3 class="trim-title bg-blue-100 text-blue-700">טרימסטר 2 (14-26)</h3>
+                    <div id="list-2" class="space-y-2"></div>
                 </div>
-                <div id="trim-3" class="space-y-4">
-                    <h3 class="trim-title bg-purple-100 text-purple-700">טרימסטר 3</h3>
-                    <div class="task-list" id="list-3"></div>
+                <div class="space-y-4">
+                    <h3 class="trim-title bg-purple-100 text-purple-700">טרימסטר 3 (27-40)</h3>
+                    <div id="list-3" class="space-y-2"></div>
                 </div>
             </div>
-        </main>
+        </div>
 
-        <main id="content-procurement" class="tab-content hidden">
-            <div class="card p-8">
+        <div id="tab-procurement" class="tab-content hidden space-y-6">
+            <div class="card p-6">
                 <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xl font-bold italic">רשימת קניות ותקציב</h3>
-                    <div class="text-left text-sm">
-                        <span class="text-slate-500">סה"כ הוצאות:</span>
-                        <span id="total-cost" class="font-black text-pink-600">₪0</span>
+                    <h3 class="font-bold text-lg">רשימת ציוד ותקציב</h3>
+                    <div class="text-left">
+                        <p class="text-[10px] text-slate-400 uppercase">הוצאה בפועל</p>
+                        <p id="total-spent" class="text-xl font-black text-pink-500">₪0</p>
                     </div>
                 </div>
-                <div id="proc-items" class="space-y-2"></div>
-                <button onclick="addProcItem()" class="mt-4 text-xs font-bold text-pink-500">+ הוסף פריט לרשימה</button>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-sm">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="p-3 rounded-r-xl">מוצר</th>
+                                <th class="p-3">מחיר משוער</th>
+                                <th class="p-3">שילמנו בפועל</th>
+                                <th class="p-3 text-center">סטטוס</th>
+                                <th class="p-3 rounded-l-xl"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="proc-body"></tbody>
+                    </table>
+                </div>
+                <button onclick="addProcItem()" class="btn-add-mini mt-4">+ הוסף מוצר בהתאמה אישית</button>
             </div>
-        </main>
+        </div>
 
-        <main id="content-emergency" class="tab-content hidden">
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="card p-6 bg-red-50 border-red-200">
-                    <h3 class="text-red-700 font-bold mb-4 flex items-center gap-2">
-                        <i data-lucide="phone-call"></i> קשר מהיר וחירום
-                    </h3>
-                    <div class="space-y-3 text-sm">
-                        <div class="flex justify-between border-b pb-2"><span>מד"א</span><span class="font-bold">101</span></div>
-                        <div class="flex justify-between border-b pb-2"><span>מוקד נשים (קופ"ח)</span><span class="font-bold">*2700</span></div>
-                        <div class="bg-white p-3 rounded-xl border border-red-100 italic text-xs">
-                            פרטים של ענבר: סוג דם A+, ת.ז 012345678
-                        </div>
-                    </div>
-                </div>
-                <div class="card p-6">
-                    <h3 class="font-bold mb-4">תיק לבית חולים</h3>
-                    <ul class="text-sm space-y-2" id="hospital-bag">
-                        </ul>
-                </div>
+        <div id="tab-hospital" class="tab-content hidden grid md:grid-cols-2 gap-6">
+            <div class="card p-6">
+                <h3 class="font-bold mb-4 flex items-center gap-2 text-pink-600"><i data-lucide="package"></i> לענבר (חדר לידה)</h3>
+                <div id="bag-inbar" class="space-y-2"></div>
             </div>
-        </main>
+            <div class="card p-6">
+                <h3 class="font-bold mb-4 flex items-center gap-2 text-blue-600"><i data-lucide="baby"></i> לרך הנולד</h3>
+                <div id="bag-baby" class="space-y-2"></div>
+            </div>
+        </div>
 
-        <footer id="daily-tips" class="bg-amber-50 p-6 rounded-3xl border border-amber-100 mt-12">
-            <div class="flex gap-4">
-                <div class="text-3xl">💡</div>
-                <div>
-                    <h4 class="font-bold text-amber-800">טיפ למשה (האבא):</h4>
-                    <p id="dad-tip" class="text-sm text-amber-700 italic italic">טוען טיפ רלוונטי לשבוע שלך...</p>
-                </div>
+        <div id="tab-emergency" class="tab-content hidden space-y-6">
+            <div class="card p-6 border-red-200 bg-red-50/50">
+                <h3 class="text-red-700 font-bold mb-4">קשר מהיר וחירום</h3>
+                <div id="emergency-list" class="grid md:grid-cols-2 gap-4"></div>
+                <button onclick="addEmergency()" class="btn-add-mini mt-4 text-red-600">+ הוסף איש קשר/מספר</button>
             </div>
-        </footer>
+        </div>
+
+        <div id="weekly-tip-box" class="bg-amber-50 border border-amber-100 p-6 rounded-[32px] flex gap-4 items-start shadow-sm">
+            <div class="bg-white p-3 rounded-2xl shadow-sm text-2xl">💡</div>
+            <div>
+                <h4 class="font-bold text-amber-900 mb-1">טיפ לשבוע <span id="tip-week-num">--</span>:</h4>
+                <p id="tip-text" class="text-amber-800 text-sm leading-relaxed italic"></p>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
