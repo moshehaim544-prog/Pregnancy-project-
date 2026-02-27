@@ -1,64 +1,13 @@
-.card-gradient {
-    background: linear-gradient(135deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%);
-}
-
-.card {
-    background: white;
-    border-radius: 24px;
-    border: 1px solid #F1F5F9;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-}
-
-.input-field {
-    border: 2px solid #F1F5F9;
-    border-radius: 12px;
-    padding: 8px 12px;
-    font-size: 14px;
-    outline: none;
-    transition: 0.2s;
-}
-
-.input-field:focus { border-color: #FF6A88; }
-
-.tab-btn {
-    padding: 12px 24px;
-    font-weight: 700;
-    color: #94A3B8;
-    transition: 0.3s;
-}
-
-.tab-btn.active {
-    color: #FF6A88;
-    border-bottom: 3px solid #FF6A88;
-}
-
-.trim-title {
-    padding: 8px 16px;
-    border-radius: 12px;
-    font-weight: 800;
-    font-size: 13px;
-    text-transform: uppercase;
-}
-
-.task-item {
-    background: white;
-    padding: 12px;
-    border-radius: 16px;
-    border: 1px solid #F1F5F9;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    transition: 0.2s;
-}
-
-.task-item:hover { border-color: #FF6A88; }
-
-.btn-save {
-    background: #0F172A;
-    color: white;
-    padding: 10px 24px;
-    border-radius: 14px;
-    font-weight: 700;
-    font-size: 14px;
-}
+.card-gradient { background: linear-gradient(135deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%); }
+.card { background: white; border-radius: 32px; border: 1px solid #F1F5F9; box-shadow: 0 4px 20px -5px rgba(0,0,0,0.05); }
+.input-field { border: 2px solid #F1F5F9; border-radius: 14px; padding: 10px 15px; font-size: 14px; outline: none; transition: 0.2s; }
+.input-field:focus { border-color: #FF6A88; background: #FFF5F7; }
+.label-sm { font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; display: block; }
+.tab-btn { padding: 12px 20px; font-weight: 700; color: #94A3B8; transition: 0.3s; white-space: nowrap; }
+.tab-btn.active { color: #FF6A88; border-bottom: 3px solid #FF6A88; }
+.trim-title { padding: 10px 18px; border-radius: 15px; font-weight: 800; font-size: 13px; margin-bottom: 15px; }
+.task-card { background: white; padding: 12px 16px; border-radius: 18px; border: 1px solid #F1F5F9; display: flex; gap: 12px; align-items: center; transition: 0.2s; }
+.task-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+.btn-secondary { background: #F1F5F9; color: #475569; padding: 8px 16px; border-radius: 12px; font-weight: 700; }
+.btn-add-mini { font-size: 12px; font-weight: 800; color: #FF6A88; cursor: pointer; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
