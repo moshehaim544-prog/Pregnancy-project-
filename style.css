@@ -1,15 +1,31 @@
 :root { --p: #F472B6; --bg: #FDFCFB; }
-body { background: var(--bg); font-family: 'Assistant', sans-serif; }
+body { background: var(--bg); font-family: 'Assistant', sans-serif; -webkit-tap-highlight-color: transparent; }
+
 .card-gradient { background: linear-gradient(135deg, #FFB6C1 0%, #F472B6 100%); border: none; }
-.card { background: white; border-radius: 32px; border: 1px solid rgba(226, 232, 240, 0.5); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.03); }
-.input-field { border: 1px solid #F1F5F9; border-radius: 16px; padding: 12px 16px; background: #F8FAFC; outline: none; transition: 0.2s; font-size: 14px; }
-.input-field:focus { border-color: var(--p); background: white; box-shadow: 0 0 0 4px rgba(244, 114, 182, 0.1); }
-.tab-btn { padding: 14px 20px; font-weight: 800; color: #94A3B8; border-bottom: 3px solid transparent; transition: 0.3s; white-space: nowrap; font-size: 14px; }
+.card { background: white; border-radius: 40px; border: 1px solid rgba(226, 232, 240, 0.4); box-shadow: 0 15px 40px -15px rgba(0,0,0,0.05); }
+
+.input-field { border: 2px solid #F1F5F9; border-radius: 20px; padding: 14px 20px; background: #F8FAFC; outline: none; transition: 0.3s; font-weight: 600; }
+.input-field:focus { border-color: var(--p); background: white; box-shadow: 0 0 0 5px rgba(244, 114, 182, 0.1); }
+
+.tab-btn { padding: 16px 24px; font-weight: 800; color: #94A3B8; border-bottom: 4px solid transparent; transition: 0.3s; font-size: 15px; }
 .tab-btn.active { color: var(--p); border-bottom-color: var(--p); }
-.trim-title { padding: 12px; border-radius: 18px; font-size: 12px; text-align: center; }
-.task-card { background: white; padding: 14px; border-radius: 20px; border: 1px solid #F8FAFC; display: flex; gap: 12px; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.01); }
-.help-icon { background: #F8FAFC; color: #94A3B8; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; cursor: pointer; }
-.btn-save { background: #1E293B; color: white; border-radius: 18px; font-weight: 800; transition: 0.2s; }
-.btn-save:hover { transform: translateY(-2px); filter: brightness(1.1); }
-.btn-secondary { background: #F1F5F9; color: #475569; border-radius: 14px; }
+
+.trim-title { padding: 14px; border-radius: 22px; font-size: 13px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+
+.task-card { background: white; padding: 18px; border-radius: 25px; display: flex; gap: 15px; align-items: center; border: 1px solid #F1F5F9; transition: 0.2s; }
+.task-card:hover { transform: scale(1.02); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05); }
+
+.help-icon { background: #F1F5F9; color: #64748B; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; cursor: pointer; transition: 0.2s; }
+.help-icon:hover { background: var(--p); color: white; }
+
+.btn-save { padding: 14px; border-radius: 20px; font-weight: 800; color: white; transition: 0.2s; background: #1E293B; }
+.btn-save:active { transform: scale(0.96); }
+
+.btn-add-mini { font-size: 12px; font-weight: 800; color: #94A3B8; text-transform: uppercase; }
+
+table th { color: #94A3B8; font-size: 11px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; }
+
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+@keyframes scale-up { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+.scale-up { animation: scale-up 0.3s ease-out; }
